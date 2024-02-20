@@ -49,6 +49,10 @@ import { useDatasetMetadataBar } from 'src/features/datasets/metadataBar/useData
 import TableControls from './DrillDetailTableControls';
 import { getDrillPayload } from './utils';
 import { ResultsPage } from './types';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-quartz.css';
+import 'ag-grid-enterprise';
+import { AgGridReact } from 'ag-grid-react';
 
 const PAGE_SIZE = 50;
 
@@ -286,8 +290,8 @@ export default function DrillDetailPane({
     tableContent = <EmptyStateMedium image="document.svg" title={title} />;
   } else {
     // Render table if at least one page has successfully loaded
-    tableContent = (
-      <Resizable>
+    tableContent = (  
+      <Resizable>    
         <Table
           data={data}
           columns={mappedColumns}
@@ -307,6 +311,9 @@ export default function DrillDetailPane({
     );
   }
 
+  
+  
+  
   return (
     <>
       {!bootstrapping && metadataBar}
@@ -317,9 +324,14 @@ export default function DrillDetailPane({
           totalCount={resultsPage?.total}
           loading={isLoading}
           onReload={handleReload}
-        />
+        ></TableControls>
       )}
       {tableContent}
+      { <AgGridReact
+          sideBar={'columns'} 
+          columnDefs={mappedColumns}
+          rowData={data}
+          />}
     </>
   );
 }

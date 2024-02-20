@@ -25,9 +25,11 @@ import {
   isAdhocColumn,
   t,
   useTheme,
+  
 } from '@superset-ui/core';
 import RowCountLabel from 'src/explore/components/RowCountLabel';
 import Icons from 'src/components/Icons';
+import SearchFilter from 'src/components/ListView/Filters/Search';
 
 export default function TableControls({
   filters,
@@ -76,6 +78,8 @@ export default function TableControls({
     [filterMap],
   );
 
+
+
   return (
     <div
       css={css`
@@ -85,6 +89,14 @@ export default function TableControls({
         margin-bottom: ${theme.gridUnit * 2}px;
       `}
     >
+      <div
+        css={css`
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -${theme.gridUnit * 8}px;
+        `}>
+          <SearchFilter name={'Type To Search'} Header={''} onSubmit={()=>{}} initialValue={''}/>
+      </div>
       <div
         css={css`
           display: flex;
