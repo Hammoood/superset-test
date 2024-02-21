@@ -16,6 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 import React, {
   ReactElement,
   useCallback,
@@ -33,6 +34,7 @@ import {
   JsonObject,
   QueryFormData,
   t,
+  styled,
   useTheme,
 } from '@superset-ui/core';
 import { useResizeDetector } from 'react-resize-detector';
@@ -52,7 +54,12 @@ import { ResultsPage } from './types';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import 'ag-grid-enterprise';
+import { Input } from 'src/components/Input';
+import Icons from 'src/components/Icons';
 import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css'; // Core CSS
+import 'ag-grid-community/styles/ag-theme-quartz.css'; // Theme
+
 
 const PAGE_SIZE = 50;
 
@@ -80,10 +87,13 @@ enum TimeFormatting {
 export default function DrillDetailPane({
   formData,
   initialFilters,
+
 }: {
   formData: QueryFormData;
   initialFilters: BinaryQueryObjectFilterClause[];
+
 }) {
+
   const theme = useTheme();
   const [pageIndex, setPageIndex] = useState(0);
   const lastPageIndex = useRef(pageIndex);
@@ -149,7 +159,7 @@ export default function DrillDetailPane({
           ) : (
             column
           ),
-        render: value => {
+        render: (value:any) => {
           if (value === true || value === false) {
             return <BooleanCell value={value} />;
           }
@@ -177,12 +187,28 @@ export default function DrillDetailPane({
           resultsPage?.colNames.reduce(
             (acc, curr) => ({ ...acc, [curr]: row[curr] }),
             {
-              key: index,
+              key: index
             },
           ),
       ) || [],
     [resultsPage?.colNames, resultsPage?.data],
   );
+
+  const [searchinput, setSearchInput] = useState('');
+  const [filteredResults, setFilteredResults] = useState<DataType[]>(data);
+ 
+  const searchItem = (searchValue:any) => {
+    setSearchInput(searchValue)
+    if (searchinput == '') {
+      setFilteredResults(data)  
+    }
+    else{
+      const filteredData = data.filter((item) => {
+        return Object.values(item).join('').toLowerCase().includes(searchinput.toLowerCase())
+      })
+      setFilteredResults(filteredData)
+    }
+}
 
   // Clear cache on reload button click
   const handleReload = useCallback(() => {
@@ -268,7 +294,7 @@ export default function DrillDetailPane({
   const bootstrapping =
     (!responseError && !resultsPages.size) ||
     metadataBarStatus === ResourceStatus.Loading;
-
+ 
   let tableContent = null;
   if (responseError) {
     // Render error if page download failed
@@ -288,19 +314,20 @@ export default function DrillDetailPane({
     // Render empty state if no results are returned for page
     const title = t('No rows were returned for this dataset');
     tableContent = <EmptyStateMedium image="document.svg" title={title} />;
-  } else {
+  }
+   else {
     // Render table if at least one page has successfully loaded
     tableContent = (  
       <Resizable>    
         <Table
-          data={data}
+          data={filteredResults}
           columns={mappedColumns}
           size={TableSize.Small}
           defaultPageSize={PAGE_SIZE}
           recordCount={resultsPage?.total}
           usePagination
           loading={isLoading}
-          onChange={pagination =>
+          onChange={(pagination :any) =>
             setPageIndex(pagination.current ? pagination.current - 1 : 0)
           }
           resizable
@@ -311,11 +338,13 @@ export default function DrillDetailPane({
     );
   }
 
-  
-  
+  const SearchIcon = styled(Icons.Search)`
+  color: ${({ theme }) => theme.colors.grayscale.light1};
+`;
   
   return (
     <>
+              
       {!bootstrapping && metadataBar}
       {!bootstrapping && (
         <TableControls
@@ -326,12 +355,17 @@ export default function DrillDetailPane({
           onReload={handleReload}
         ></TableControls>
       )}
+
+      <Input onChange={(e:any)=>searchItem(e.target.value)} width='50%' prefix={<SearchIcon iconSize="l" />} css={css`
+       width: 50%;
+       margin-left: 190px;
+      `} />
       {tableContent}
-      { <AgGridReact
-          sideBar={'columns'} 
-          columnDefs={mappedColumns}
-          rowData={data}
-          />}
+      {/* <AgGridReact
+					columnDefs={data}
+					rowData={mappedColumns}>
+           
+				</AgGridReact> */}
     </>
   );
 }
