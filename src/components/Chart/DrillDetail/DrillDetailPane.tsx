@@ -53,9 +53,8 @@ import { getDrillPayload } from './utils';
 import { ResultsPage } from './types';
 import Icons from 'src/components/Icons';
 import { Input } from 'src/components/Input';
-import { Select } from 'antd';
+import { Select,Checkbox } from 'antd';
 const { Option } = Select;
-
 
 
 const PAGE_SIZE = 50;
@@ -192,7 +191,7 @@ export default function DrillDetailPane({
 
   const [searchinput, setSearchInput] = useState('');
   const [filteredResults, setFilteredResults] = useState<DataType[]>(data);
-  const [selectedColumns, setSelectedColumns] = useState<ColumnsType<DataType>[]>([mappedColumns]);
+  const [selectedColumns, setSelectedColumns] = useState<ColumnsType<DataType>>([]);
 
   const searchItem = (searchValue:any) => {
     setSearchInput(searchValue)
@@ -202,8 +201,8 @@ export default function DrillDetailPane({
     else{
       const filteredData = data.filter((item) => {
         return Object.values(item).join('').toLowerCase().includes(searchinput.toLowerCase())
-      })
-      setFilteredResults(filteredData)
+      });
+      setFilteredResults(filteredData);
     }
 }
 
@@ -292,18 +291,59 @@ export default function DrillDetailPane({
     (!responseError && !resultsPages.size) ||
     metadataBarStatus === ResourceStatus.Loading;
 
+  //select hidden columns
+  // const handleSelectChange = (selectedColumnsKeys: string[]) => {
+  //   const updatedSelectedColumns = mappedColumns.filter((column:any) =>
+  //     selectedColumnsKeys.includes(column.key)
+  //   );
+  //   setSelectedColumns(updatedSelectedColumns);
+  // };
+
   const handleSelectChange = (selectedColumnsKeys: string[]) => {
-    const selectedColumns = mappedColumns.filter((column:any) =>
-      selectedColumnsKeys.includes(column.key)
-    );
-    setSelectedColumns(selectedColumns);
+    const updatedSelectedColumns = mappedColumns.filter((column:any) =>
+    selectedColumnsKeys.includes(column.key)
+  );
+  setSelectedColumns(updatedSelectedColumns);
   };
+
+  const columnsDropdown = (
+    <div>
+      <Checkbox.Group
+        options={mappedColumns.map((column: any) => ({
+          label: column.title,
+          value: column.key,
+        }))}
+        value={selectedColumns.map((column:any) => column.key)}
+        onChange={handleSelectChange}
+      />
+    </div>
+  );
   
-  const columns = selectedColumns.map(column => ({
-    title: column.title,
-    dataIndex: column.key,
-    key: column.key,
-    width: column.width }));
+  const columnsSelect = (
+    <Select
+      mode="multiple"
+      style={{ width: '50%' }}
+      placeholder="Select columns"
+      onChange={handleSelectChange}
+      dropdownRender={() => columnsDropdown}
+    >
+      {mappedColumns.map((column: any) => (
+        <Option key={column.key} value={column.key}>
+          {column.title}
+        </Option>
+      ))}
+    </Select>
+  );
+
+  useEffect(() => {
+    const defaultWidth = 150;
+    setSelectedColumns(mappedColumns.map((column:any) => ({
+      ...column,
+      width: column.width || defaultWidth,
+    })));
+  }, [mappedColumns]);
+
+  const columns = selectedColumns.map((column:any) => ({ ...column }));
 
   let tableContent = null;
   if (responseError) {
@@ -329,7 +369,7 @@ export default function DrillDetailPane({
     tableContent = (  
       <Resizable>    
         <Table
-          data={searchinput == '' ? data : filteredResults}
+          data={searchinput === '' ? data : filteredResults}
           columns={columns}
           size={TableSize.Small}
           defaultPageSize={PAGE_SIZE}
@@ -365,15 +405,15 @@ export default function DrillDetailPane({
       <div css={css`
         display: flex;      
         align-items: center; 
-        margin-bottom: 10px;`
+        margin-bottom: 10px;
+        padding: 2px`
       }>
         <Input placeholder={'type to search'} onChange={(e:any)=>searchItem(e.target.value)} prefix={<SearchIcon iconSize="l" />} style={{ width: '50%' }}/>
-
-        <Select
+        {/* <Select
           mode="multiple"
           style={{ width: '50%' }}
           placeholder="Select columns"
-          value={selectedColumns.map((column) => column.key)}
+          value={selectedColumns.map((column:any) => column.key)}
           onChange={handleSelectChange}
         >
           {mappedColumns.map((column:any) => (
@@ -381,7 +421,8 @@ export default function DrillDetailPane({
               {column.title}
             </Option>
           ))}
-        </Select>
+        </Select> */}
+        {columnsSelect}
       </div>
       {tableContent}
     </>
