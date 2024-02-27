@@ -51,19 +51,16 @@ import { useDatasetMetadataBar } from 'src/features/datasets/metadataBar/useData
 import TableControls from './DrillDetailTableControls';
 import { getDrillPayload } from './utils';
 import { ResultsPage } from './types';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-quartz.css';
-import 'ag-grid-enterprise';
-import { Input } from 'src/components/Input';
 import Icons from 'src/components/Icons';
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/styles/ag-grid.css'; // Core CSS
-import 'ag-grid-community/styles/ag-theme-quartz.css'; // Theme
+import { Input } from 'src/components/Input';
+import { Select } from 'antd';
+const { Option } = Select;
+
 
 
 const PAGE_SIZE = 50;
 
-interface DataType {
+export interface DataType {
   [key: string]: any;
 }
 
@@ -77,7 +74,7 @@ function Resizable({ children }: { children: ReactElement }) {
       {React.cloneElement(children, { height })}
     </div>
   );
-}
+  }
 
 enum TimeFormatting {
   Original,
@@ -93,7 +90,6 @@ export default function DrillDetailPane({
   initialFilters: BinaryQueryObjectFilterClause[];
 
 }) {
-
   const theme = useTheme();
   const [pageIndex, setPageIndex] = useState(0);
   const lastPageIndex = useRef(pageIndex);
@@ -196,7 +192,8 @@ export default function DrillDetailPane({
 
   const [searchinput, setSearchInput] = useState('');
   const [filteredResults, setFilteredResults] = useState<DataType[]>(data);
- 
+  const [selectedColumns, setSelectedColumns] = useState<ColumnsType<DataType>[]>([mappedColumns]);
+
   const searchItem = (searchValue:any) => {
     setSearchInput(searchValue)
     if (searchinput == '') {
@@ -294,7 +291,20 @@ export default function DrillDetailPane({
   const bootstrapping =
     (!responseError && !resultsPages.size) ||
     metadataBarStatus === ResourceStatus.Loading;
- 
+
+  const handleSelectChange = (selectedColumnsKeys: string[]) => {
+    const selectedColumns = mappedColumns.filter((column:any) =>
+      selectedColumnsKeys.includes(column.key)
+    );
+    setSelectedColumns(selectedColumns);
+  };
+  
+  const columns = selectedColumns.map(column => ({
+    title: column.title,
+    dataIndex: column.key,
+    key: column.key,
+    width: column.width }));
+
   let tableContent = null;
   if (responseError) {
     // Render error if page download failed
@@ -314,14 +324,13 @@ export default function DrillDetailPane({
     // Render empty state if no results are returned for page
     const title = t('No rows were returned for this dataset');
     tableContent = <EmptyStateMedium image="document.svg" title={title} />;
-  }
-   else {
+  } else {
     // Render table if at least one page has successfully loaded
     tableContent = (  
       <Resizable>    
         <Table
-          data={filteredResults}
-          columns={mappedColumns}
+          data={searchinput == '' ? data : filteredResults}
+          columns={columns}
           size={TableSize.Small}
           defaultPageSize={PAGE_SIZE}
           recordCount={resultsPage?.total}
@@ -339,12 +348,10 @@ export default function DrillDetailPane({
   }
 
   const SearchIcon = styled(Icons.Search)`
-  color: ${({ theme }) => theme.colors.grayscale.light1};
-`;
-  
+  color: ${({ theme }) => theme.colors.grayscale.light1};`;
+
   return (
     <>
-              
       {!bootstrapping && metadataBar}
       {!bootstrapping && (
         <TableControls
@@ -355,17 +362,28 @@ export default function DrillDetailPane({
           onReload={handleReload}
         ></TableControls>
       )}
+      <div css={css`
+        display: flex;      
+        align-items: center; 
+        margin-bottom: 10px;`
+      }>
+        <Input placeholder={'type to search'} onChange={(e:any)=>searchItem(e.target.value)} prefix={<SearchIcon iconSize="l" />} style={{ width: '50%' }}/>
 
-      <Input onChange={(e:any)=>searchItem(e.target.value)} width='50%' prefix={<SearchIcon iconSize="l" />} css={css`
-       width: 50%;
-       margin-left: 190px;
-      `} />
+        <Select
+          mode="multiple"
+          style={{ width: '50%' }}
+          placeholder="Select columns"
+          value={selectedColumns.map((column) => column.key)}
+          onChange={handleSelectChange}
+        >
+          {mappedColumns.map((column:any) => (
+            <Option key={column.key} value={column.key}>
+              {column.title}
+            </Option>
+          ))}
+        </Select>
+      </div>
       {tableContent}
-      {/* <AgGridReact
-					columnDefs={data}
-					rowData={mappedColumns}>
-           
-				</AgGridReact> */}
     </>
   );
 }
