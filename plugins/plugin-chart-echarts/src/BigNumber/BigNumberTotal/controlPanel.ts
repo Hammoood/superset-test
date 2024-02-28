@@ -24,7 +24,7 @@ import {
   Dataset,
   getStandardizedControls,
 } from '@superset-ui/chart-controls';
-import { headerFontSize, subheaderFontSize } from '../sharedControls';
+import { headerFontSize, subheaderFontSize ,headerColor ,headerFontFamily } from '../sharedControls';
 
 export default {
   controlPanelSections: [
@@ -57,6 +57,9 @@ export default {
       label: t('Chart Options'),
       expanded: true,
       controlSetRows: [
+        ['color_scheme'],
+        [headerColor],
+        [headerFontFamily],
         [headerFontSize],
         [subheaderFontSize],
         ['y_axis_format'],

@@ -92,8 +92,8 @@ class BigNumberVis extends React.PureComponent<BigNumberVizProps,modalProps> {
     subheader: '',
     subheaderFontSize: PROPORTION.SUBHEADER,
     timeRangeFixed: false,
-    
-  };
+    headerColor: {r:3,g:2,b:10,a:100},
+    };
 
   getClassName() {
     const { className, showTrendLine, bigNumberFallback } = this.props;
@@ -166,7 +166,7 @@ class BigNumberVis extends React.PureComponent<BigNumberVizProps,modalProps> {
   }
 
   renderHeader(maxHeight: number) {
-    const { bigNumber, headerFormatter, width, colorThresholdFormatters } =
+    const { bigNumber, headerFormatter, width, colorThresholdFormatters} =
       this.props;
     // @ts-ignore
     const text = bigNumber === null ? t('No data') : headerFormatter(bigNumber);
@@ -207,13 +207,18 @@ class BigNumberVis extends React.PureComponent<BigNumberVizProps,modalProps> {
       }
     };
 
+    const { r, g, b, a } = this.props.headerColor;
+    const rgbaColor = `rgba(${r}, ${g}, ${b}, ${a})`;
+
     return (
       <div
         className="header-line"
         style={{
           fontSize,
           height: maxHeight,
-          color: numberColor,
+          color: rgbaColor,
+          backgroundImage: `linear-gradient(to right, #FF0000, #FFFF00, #FFA500, #A52A2A)`,
+          fontFamily: this.props.headerFontFamily,
         }}
         onContextMenu={onContextMenu}
       >
@@ -333,7 +338,7 @@ class BigNumberVis extends React.PureComponent<BigNumberVizProps,modalProps> {
               ),
             )}
             {this.renderHeader(
-              Math.ceil(headerFontSize * (1 - PROPORTION.TRENDLINE) * height),
+              Math.ceil(headerFontSize * (1 - PROPORTION.TRENDLINE) * height)
             )}
             {this.renderSubheader(
               Math.ceil(
@@ -369,11 +374,13 @@ class BigNumberVis extends React.PureComponent<BigNumberVizProps,modalProps> {
 export default styled(BigNumberVis)`
   ${({ theme }) => `
     font-family: ${theme.typography.families.sansSerif};
+    color: ${'color_picker'};
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    
 
     &.no-trendline .subheader-line {
       padding-bottom: 0.3em;

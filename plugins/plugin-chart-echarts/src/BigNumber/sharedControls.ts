@@ -55,6 +55,57 @@ export const headerFontSize: CustomControlItem = {
   },
 };
 
+export const headerFontFamily: CustomControlItem = {
+  name: 'header_font_family',
+  config: {
+    type: 'SelectControl',
+    label: t('Big Number Font family'),
+    renderTrigger: true,
+    clearable: false,
+    // Values represent the percentage of space a header should take
+    options: [
+      {
+        label: t('emoji'),
+        value: 'emoji',
+      },
+      {
+        label: t('serif'),
+        value: 'serif',
+      },
+      {
+        label: t('sans-serif'),
+        value:'sans-serif',
+      },
+      {
+        label: t('monospace'),
+        value: 'monospace',
+      },
+      {
+        label: t('cursive'),
+        value: 'cursive',
+      },
+      {
+        label: t('fantasy'),
+        value: 'fantasy',
+      },
+      {
+        label: t('fangsong'),
+        value: 'fangsong',
+      },
+    ],
+  },
+};
+
+export const headerColor: CustomControlItem = {
+  name: 'header_color',
+  config: {
+    type: 'ColorPickerControl',
+    label: t('Big Number Color '),
+    renderTrigger: true,
+    clearable: false,
+  },
+};
+
 export const subheaderFontSize: CustomControlItem = {
   name: 'subheader_font_size',
   config: {

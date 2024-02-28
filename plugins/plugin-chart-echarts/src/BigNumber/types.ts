@@ -67,6 +67,13 @@ export type BigNumberWithTrendlineChartProps =
 
 export type TimeSeriesDatum = [number, number | null];
 
+export type Color = {
+  a: number;
+  b: number;
+  g: number;
+  r: number;
+};
+
 export type BigNumberVizProps = {
   className?: string;
   width: number;
@@ -96,4 +103,7 @@ export type BigNumberVizProps = {
   formData?: BigNumberWithTrendlineFormData;
   refs: Refs;
   colorThresholdFormatters?: ColorFormatters;
+  headerColor:Color;
+  headerFontFamily:string;
+  colorSceme:string;
 };
