@@ -121,8 +121,11 @@ const VirtualTable = <RecordType extends object>(
    * There are cases where a user could set the width of each column and the total width is less than width of
    * the table.  In this case we will stretch the last column to use the extra space
    */
+  console.log('999',totalWidth,tableWidth)
   if (totalWidth < tableWidth) {
+console.log('999',mergedColumns)
     const lastColumn = mergedColumns[mergedColumns.length - 1];
+    console.log('999', lastColumn)
     lastColumn.width =
       (lastColumn.width as number) + Math.floor(tableWidth - totalWidth);
   }

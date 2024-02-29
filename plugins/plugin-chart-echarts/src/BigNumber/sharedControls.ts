@@ -139,3 +139,54 @@ export const subheaderFontSize: CustomControlItem = {
     ],
   },
 };
+
+export const subheaderFontFamily: CustomControlItem = {
+  name: 'subheader_font_family',
+  config: {
+    type: 'SelectControl',
+    label: t('subheader Font family'),
+    renderTrigger: true,
+    clearable: false,
+    // Values represent the percentage of space a header should take
+    options: [
+      {
+        label: t('emoji'),
+        value: 'emoji',
+      },
+      {
+        label: t('serif'),
+        value: 'serif',
+      },
+      {
+        label: t('sans-serif'),
+        value:'sans-serif',
+      },
+      {
+        label: t('monospace'),
+        value: 'monospace',
+      },
+      {
+        label: t('cursive'),
+        value: 'cursive',
+      },
+      {
+        label: t('fantasy'),
+        value: 'fantasy',
+      },
+      {
+        label: t('fangsong'),
+        value: 'fangsong',
+      },
+    ],
+  },
+};
+
+export const subheaderColor: CustomControlItem = {
+  name: 'subheader_color',
+  config: {
+    type: 'ColorPickerControl',
+    label: t('subheader Color '),
+    renderTrigger: true,
+    clearable: false,
+  },
+};

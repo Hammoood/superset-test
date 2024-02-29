@@ -129,7 +129,28 @@ export const Table = styled.table`
         height: 1.2em;
       }
     }
-
+    
+    .action-button-share{
+      &:hover {
+        path {
+          fill: ${theme.colors.primary.base};
+        }
+      }
+    }
+    .action-button-edit{
+      &:hover {
+        path {
+          fill: ${theme.colors.success.base};
+        }
+      }
+    }
+    .action-button-delete{
+      &:hover {
+        path {
+          fill: ${theme.colors.warning.base};
+        }
+      }
+    }
     .actions {
       white-space: nowrap;
       min-width: 100px;
@@ -137,12 +158,6 @@ export const Table = styled.table`
       svg,
       i {
         margin-right: 8px;
-
-        &:hover {
-          path {
-            fill: ${theme.colors.primary.base};
-          }
-        }
       }
     }
 

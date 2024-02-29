@@ -56,6 +56,8 @@ export default function transformProps(
     currencyFormat,
     headerColor,
     headerFontFamily,
+    subheaderFontFamily,
+    subheaderColor
   } = formData;
   const refs: Refs = {};
   const { data = [], coltypes = [] } = queriesData[0];
@@ -114,5 +116,7 @@ export default function transformProps(
     colorThresholdFormatters,
     headerColor,
     headerFontFamily,
+    subheaderFontFamily,
+    subheaderColor
   };
 }

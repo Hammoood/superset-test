@@ -291,14 +291,6 @@ export default function DrillDetailPane({
     (!responseError && !resultsPages.size) ||
     metadataBarStatus === ResourceStatus.Loading;
 
-  //select hidden columns
-  // const handleSelectChange = (selectedColumnsKeys: string[]) => {
-  //   const updatedSelectedColumns = mappedColumns.filter((column:any) =>
-  //     selectedColumnsKeys.includes(column.key)
-  //   );
-  //   setSelectedColumns(updatedSelectedColumns);
-  // };
-
   const handleSelectChange = (selectedColumnsKeys: string[]) => {
     const updatedSelectedColumns = mappedColumns.filter((column:any) =>
     selectedColumnsKeys.includes(column.key)
@@ -324,22 +316,14 @@ export default function DrillDetailPane({
       mode="multiple"
       style={{ width: '50%' }}
       placeholder="Select columns"
-      onChange={handleSelectChange}
       dropdownRender={() => columnsDropdown}
     >
-      {mappedColumns.map((column: any) => (
-        <Option key={column.key} value={column.key}>
-          {column.title}
-        </Option>
-      ))}
     </Select>
   );
 
   useEffect(() => {
-    const defaultWidth = 150;
     setSelectedColumns(mappedColumns.map((column:any) => ({
       ...column,
-      width: column.width || defaultWidth,
     })));
   }, [mappedColumns]);
 
@@ -408,20 +392,12 @@ export default function DrillDetailPane({
         margin-bottom: 10px;
         padding: 2px`
       }>
-        <Input placeholder={'type to search'} onChange={(e:any)=>searchItem(e.target.value)} prefix={<SearchIcon iconSize="l" />} style={{ width: '50%' }}/>
-        {/* <Select
-          mode="multiple"
+        <Input 
+          placeholder={'type to search'} 
+          onChange={(e:any)=>searchItem(e.target.value)} 
+          prefix={<SearchIcon iconSize="l" />} 
           style={{ width: '50%' }}
-          placeholder="Select columns"
-          value={selectedColumns.map((column:any) => column.key)}
-          onChange={handleSelectChange}
-        >
-          {mappedColumns.map((column:any) => (
-            <Option key={column.key} value={column.key}>
-              {column.title}
-            </Option>
-          ))}
-        </Select> */}
+        />   
         {columnsSelect}
       </div>
       {tableContent}

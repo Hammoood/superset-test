@@ -436,7 +436,7 @@ const DatasetList: FunctionComponent<DatasetListProps> = ({
                   <span
                     role="button"
                     tabIndex={0}
-                    className="action-button"
+                    className="action-button-delete"
                     onClick={handleDelete}
                   >
                     <Icons.Trash />
@@ -452,7 +452,7 @@ const DatasetList: FunctionComponent<DatasetListProps> = ({
                   <span
                     role="button"
                     tabIndex={0}
-                    className="action-button"
+                    className="action-button-share"
                     onClick={handleExport}
                   >
                     <Icons.Share />
@@ -474,7 +474,7 @@ const DatasetList: FunctionComponent<DatasetListProps> = ({
                   <span
                     role="button"
                     tabIndex={0}
-                    className={allowEdit ? 'action-button' : 'disabled'}
+                    className={allowEdit ? 'action-button-edit' : 'disabled'}
                     onClick={allowEdit ? handleEdit : undefined}
                   >
                     <Icons.EditAlt />

@@ -29,7 +29,13 @@ import {
 } from '@superset-ui/core';
 import RowCountLabel from 'src/explore/components/RowCountLabel';
 import Icons from 'src/components/Icons';
-import SearchFilter from 'src/components/ListView/Filters/Search';
+// import SearchFilter from 'src/components/ListView/Filters/Search';
+// import ListView, {
+//   ListViewProps,
+//   Filter,
+//   Filters,
+//   FilterOperator,
+// } from 'src/components/ListView';
 
 export default function TableControls({
   filters,
@@ -78,6 +84,19 @@ export default function TableControls({
     [filterMap],
   );
 
+  // const filter: Filters = useMemo(() => {
+  //   const filters_list = [
+  //     {
+  //       Header: t('Name'),
+  //       key: 'search',
+  //       id: 'dashboard_title',
+  //       input: 'search',
+  //       operator: FilterOperator.TitleOrSlug,
+  //     },
+  //   ] as Filters;
+  //   return filters_list;
+  // }, []);
+
 
 
   return (
@@ -95,7 +114,7 @@ export default function TableControls({
         flex-wrap: wrap;
         margin-right: -${theme.gridUnit * 8}px;
         `}>
-          <SearchFilter name={'Type To Search'} Header={''} onSubmit={()=>{}} initialValue={''}/>
+          {/* <SearchFilter name={'Type To Search'} Header={''} onSubmit={()=>{}} initialValue={''}/> */}
       </div>
       <div
         css={css`

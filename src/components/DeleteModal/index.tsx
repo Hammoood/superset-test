@@ -34,6 +34,7 @@ const StyledDiv = styled.div`
 const DescriptionContainer = styled.div`
   line-height: ${({ theme }) => theme.gridUnit * 4}px;
   padding-top: 16px;
+  color: ${({ theme }) => theme.colors.warning.dark2};
 `;
 
 interface DeleteModalProps {

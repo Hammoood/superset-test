@@ -93,6 +93,7 @@ class BigNumberVis extends React.PureComponent<BigNumberVizProps,modalProps> {
     subheaderFontSize: PROPORTION.SUBHEADER,
     timeRangeFixed: false,
     headerColor: {r:3,g:2,b:10,a:100},
+    subheaderColor: {r:3,g:2,b:10,a:100},
     };
 
   getClassName() {
@@ -208,7 +209,7 @@ class BigNumberVis extends React.PureComponent<BigNumberVizProps,modalProps> {
     };
 
     const { r, g, b, a } = this.props.headerColor;
-    const rgbaColor = `rgba(${r}, ${g}, ${b}, ${a})`;
+    const rgbaheaderColor = `rgba(${r}, ${g}, ${b}, ${a})`;
 
     return (
       <div
@@ -216,8 +217,7 @@ class BigNumberVis extends React.PureComponent<BigNumberVizProps,modalProps> {
         style={{
           fontSize,
           height: maxHeight,
-          color: rgbaColor,
-          backgroundImage: `linear-gradient(to right, #FF0000, #FFFF00, #FFA500, #A52A2A)`,
+          color: rgbaheaderColor,
           fontFamily: this.props.headerFontFamily,
         }}
         onContextMenu={onContextMenu}
@@ -253,12 +253,17 @@ class BigNumberVis extends React.PureComponent<BigNumberVizProps,modalProps> {
       });
       container.remove();
 
+    const { r, g, b, a } = this.props.subheaderColor;
+    const rgbasubheaderColor = `rgba(${r}, ${g}, ${b}, ${a})`;  
+
       return (
         <div
           className="subheader-line"
           style={{
             fontSize,
             height: maxHeight,
+            color: rgbasubheaderColor,
+            fontFamily: this.props.subheaderFontFamily
           }}
         >
           {text}

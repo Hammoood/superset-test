@@ -105,5 +105,6 @@ export type BigNumberVizProps = {
   colorThresholdFormatters?: ColorFormatters;
   headerColor:Color;
   headerFontFamily:string;
-  colorSceme:string;
+  subheaderFontFamily:string;
+  subheaderColor:Color
 };

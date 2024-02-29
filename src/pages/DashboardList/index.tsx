@@ -406,7 +406,7 @@ function DashboardList(props: DashboardListProps) {
                       <span
                         role="button"
                         tabIndex={0}
-                        className="action-button"
+                        className="action-button-delete"
                         onClick={confirmDelete}
                       >
                         <Icons.Trash data-test="dashboard-list-trash-icon" />
@@ -424,7 +424,7 @@ function DashboardList(props: DashboardListProps) {
                   <span
                     role="button"
                     tabIndex={0}
-                    className="action-button"
+                    className="action-button-share"
                     onClick={handleExport}
                   >
                     <Icons.Share />
@@ -440,7 +440,7 @@ function DashboardList(props: DashboardListProps) {
                   <span
                     role="button"
                     tabIndex={0}
-                    className="action-button"
+                    className="action-button-edit"
                     onClick={handleEdit}
                   >
                     <Icons.EditAlt data-test="edit-alt" />

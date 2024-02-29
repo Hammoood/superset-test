@@ -419,7 +419,7 @@ function DatabaseList({
                 <span
                   role="button"
                   tabIndex={0}
-                  className="action-button"
+                  className="action-button-delete"
                   data-test="database-delete"
                   onClick={handleDelete}
                 >
@@ -441,7 +441,7 @@ function DatabaseList({
                   <span
                     role="button"
                     tabIndex={0}
-                    className="action-button"
+                    className="action-button-share"
                     onClick={handleExport}
                   >
                     <Icons.Share />
@@ -458,7 +458,7 @@ function DatabaseList({
                     role="button"
                     data-test="database-edit"
                     tabIndex={0}
-                    className="action-button"
+                    className="action-button-edit"
                     onClick={handleEdit}
                   >
                     <Icons.EditAlt data-test="edit-alt" />

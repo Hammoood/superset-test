@@ -34,6 +34,9 @@ import { Slice } from 'src/types/Chart';
 import { RootState } from 'src/dashboard/types';
 import { findPermission } from 'src/utils/findPermission';
 import DrillDetailPane from './DrillDetailPane';
+// import { Input } from 'src/components/Input';
+
+
 
 interface ModalFooterProps {
   canExplore: boolean;
@@ -113,6 +116,17 @@ export default function DrillDetailModal({
     history.push(exploreUrl);
   }, [exploreUrl, history]);
 
+
+  // const [newdata,setNewData] = useState(formData);
+
+  // const FilterByNameInput = useCallback((e:any)=>{
+  //       const currValue = e.target.value;
+  //       const filteredData = formData.filter(  (entry:any) =>
+  //       entry.name.includes(currValue));
+  //       setNewData(filteredData);
+  //    },[]);
+  
+
   return (
     <Modal
       show={showModal}
@@ -141,6 +155,7 @@ export default function DrillDetailModal({
       destroyOnClose
       maskClosable={false}
     >
+      {/* <Input onChange={FilterByNameInput} /> */}
       <DrillDetailPane formData={formData} initialFilters={initialFilters} />
     </Modal>
   );

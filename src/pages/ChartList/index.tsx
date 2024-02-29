@@ -489,7 +489,7 @@ function ChartList(props: ChartListProps) {
                         data-test="trash"
                         role="button"
                         tabIndex={0}
-                        className="action-button"
+                        className="action-button-delete"
                         onClick={confirmDelete}
                       >
                         <Icons.Trash />
@@ -507,7 +507,7 @@ function ChartList(props: ChartListProps) {
                   <span
                     role="button"
                     tabIndex={0}
-                    className="action-button"
+                    className="action-button-share"
                     onClick={handleExport}
                   >
                     <Icons.Share />
@@ -523,7 +523,7 @@ function ChartList(props: ChartListProps) {
                   <span
                     role="button"
                     tabIndex={0}
-                    className="action-button"
+                    className="action-button-edit"
                     onClick={openEditModal}
                   >
                     <Icons.EditAlt data-test="edit-alt" />

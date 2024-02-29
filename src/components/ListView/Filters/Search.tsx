@@ -24,7 +24,7 @@ import { SELECT_WIDTH } from 'src/components/ListView/utils';
 import { FormLabel } from 'src/components/Form';
 import { BaseFilter, FilterHandler } from './Base';
 
-interface SearchHeaderProps extends BaseFilter {
+export interface SearchHeaderProps extends BaseFilter {
   Header: string;
   onSubmit: (val: string) => void;
   name: string;

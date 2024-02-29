@@ -55,7 +55,7 @@ export const Tooltip = (props: TooltipProps) => {
           WebkitBoxOrient: 'vertical',
           textOverflow: 'ellipsis',
         }}
-        color={`${theme.colors.grayscale.dark2}e6`}
+        color={`${theme.colors.primary.dark2}e6`}
         {...props}
       />
     </>

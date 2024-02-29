@@ -133,7 +133,7 @@ export const StyledModal = styled(BaseModal)<StyledModalProps>`
     .close {
       flex: 1 1 auto;
       margin-bottom: ${({ theme }) => theme.gridUnit}px;
-      color: ${({ theme }) => theme.colors.secondary.dark1};
+      color: ${({ theme }) => theme.colors.warning.dark1};
       font-size: 32px;
       font-weight: ${({ theme }) => theme.typography.weights.light};
     }
